@@ -54,13 +54,13 @@ for example POST /login
 a successful login will return a token as response, we need that token for the other routes:  
 for /profile, /news, /summary and /mail we need to put the token into Headers for example:  
 ```
-curl -X PUT http://localhost:5000/profile \  
-     -H "Content-Type: application/json" \  
-     -H "Authorization: Bearer <your_token_here>" \  
-     -d '{  
-            "preferences": "Blockchain, Cybersecurity",  
-            "category_preferences": "Technology"  
-         }'  
+curl -X PUT http://localhost:5000/profile \
+     -H "Content-Type: application/json" \
+     -H "Authorization: <your_token_here>" \
+     -d '{
+            "preferences": "Blockchain, Cybersecurity",
+            "category_preferences": "Technology"
+         }'
 ```
 ## Scheme
 

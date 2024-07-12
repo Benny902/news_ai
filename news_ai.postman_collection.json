@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "de1c9013-63c4-42e2-a83d-004a973f46a3",
+		"name": "news_ai",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23825542"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"1234\", \r\n    \"password\": \"1234\",\r\n    \"email\": \"benny902@gmail.com\",\r\n    \"preferences\": \"Blockchain, Cybersecurity\",\r\n    \"category_preferences\": \"Technology\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/register"
+			},
+			"response": []
+		},
+		{
+			"name": "login (returns token if login success)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"1234\", \r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/login"
+			},
+			"response": []
+		},
+		{
+			"name": "show profile (with token)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ENTER_TOKEN_HERE",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:5000/profile"
+			},
+			"response": []
+		},
+		{
+			"name": "edit preferences/mail or both (with token)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ENTER_TOKEN_HERE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"preferences\": \"AI, Blockchain, ML\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/profile"
+			},
+			"response": []
+		},
+		{
+			"name": "show user his news (with token)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ENTER_TOKEN_HERE",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:5000/news"
+			},
+			"response": []
+		},
+		{
+			"name": "show user his news summary (with token)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ENTER_TOKEN_HERE",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:5000/summary"
+			},
+			"response": []
+		},
+		{
+			"name": "email to user his news summary (with token)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ENTER_TOKEN_HERE",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:5000/email"
+			},
+			"response": []
+		}
+	]
+}

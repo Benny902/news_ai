@@ -11,7 +11,7 @@ generate concise summaries using AI), and send this information to users via ema
 Telegram, or other communication channels.
 
 
-### How to run
+## How to run
 
 ```
 docker-compose up --build
@@ -21,14 +21,14 @@ now the app with all its microservices should be running.
 
 ## How to test
 
-### using integration test
+- using integration test
 to run the integration test: (cd integration_test)  
 ```
 pytest -v test.py 
 ```
 
 ### using frontend
-the app includes a frontend for easier testing and using at http://localhost:4000/
+- the app includes a frontend for easier testing and using at http://localhost:4000/
 
 ### using only backend API
 ####example usage in postman / swagger / etc:

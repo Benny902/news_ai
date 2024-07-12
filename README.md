@@ -45,21 +45,23 @@ GET /email: to email summarized news based on user preferences to users email
 
 for "POST /register" or "POST /login" you need to include json input.  
 for example POST /login  
->{  
+```
+{  
     "username": "1234",  
     "password": "1234"  
 }  
-
+```
 a successful login will return a token as response, we need that token for the other routes:  
 for /profile, /news, /summary and /mail we need to put the token into Headers for example:  
->curl -X PUT http://localhost:5000/profile \\  
+```
+curl -X PUT http://localhost:5000/profile \\  
      -H "Content-Type: application/json" \\  
      -H "Authorization: Bearer your_token_here" \\  
      -d '{  
             "preferences": "Blockchain, Cybersecurity",  
             "category_preferences": "Technology"  
          }'  
-
+```
 ## Scheme
 
 ![!\[alt text\](scheme.png)  ](./images/scheme.png)

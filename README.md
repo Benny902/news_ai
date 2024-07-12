@@ -28,7 +28,7 @@ pytest -v test.py
 ```
 
 ### using frontend
-- the app includes a frontend for easier testing and using at http://localhost:4000/
+- the app includes a frontend for easier testing and using at ```http://localhost:4000/```
 
 ### using only backend API
 ####example usage in postman / swagger / etc:

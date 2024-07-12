@@ -27,10 +27,10 @@ to run the integration test: (cd integration_test)
 pytest -v test.py 
 ```
 
-### using frontend
-- the app includes a frontend for easier testing and using at ```http://localhost:4000/```
+- using frontend
+- the app includes a frontend for easier testing and using at  ``` http://localhost:4000/ ```  
 
-### using only backend API
+- using only backend API
 ####example usage in postman / swagger / etc:
 i've also included "postman_collection.json" that you can use to test each route individually with the different order numbers as you wish.  
 

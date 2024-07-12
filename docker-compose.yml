@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  accessor_service:
+    build: ./accessor_service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+      - placement
+    networks:
+      - hello-dapr
+
+  news_service:
+    build: ./news_service
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./env/news_service.env
+    depends_on:
+      - db
+      - redis
+      - placement
+    networks:
+      - hello-dapr
+
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./components/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - hello-dapr
+
+  email_service:
+    build: ./email_service
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./env/email_service.env
+    depends_on:
+      - redis
+      - placement
+
+    networks:
+      - hello-dapr
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:80"
+
+
+###################### from here trying to implemenet Dapr from their docs ############################
+  ############################
+  # Dapr placement service
+  ############################
+  placement:
+    image: "daprio/dapr"
+    command: ["./placement", "-port", "50006"]
+    ports:
+      - "50006:50006"
+    networks:
+      - hello-dapr
+  ############################
+  # Redis state store
+  ############################
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6380:6379"
+    networks:
+      - hello-dapr
+
+  news_service-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "news_service",
+    "-placement-host-address", "placement:50006",
+    "-components-path", "/components"]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - news_service
+    network_mode: "service:news_service"
+
+  accessor_service-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "accessor_service",
+    "-placement-host-address", "placement:50006",
+    "-components-path", "/components"]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - accessor_service
+    network_mode: "service:accessor_service"
+
+  email_service-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "email_service",
+    "-placement-host-address", "placement:50006",
+    "-components-path", "/components"]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - email_service
+    network_mode: "service:email_service"
+
+networks:
+    hello-dapr:
+
+volumes:
+  mongo-data:

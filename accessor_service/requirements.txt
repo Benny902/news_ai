@@ -1,0 +1,7 @@
+Flask
+requests
+Flask-Cors
+dapr
+flask-dapr
+dapr.ext.grpc
+asyncio

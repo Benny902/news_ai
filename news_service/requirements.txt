@@ -1,0 +1,6 @@
+Flask
+pymongo
+PyJWT
+werkzeug
+requests
+retrying

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div id="navbarContainer"></div>
+    <script>
+        async function loadNavbar() {
+            try {
+                const response = await fetch('navbar.html');
+                if (!response.ok) throw new Error('Failed to fetch navbar');
+                document.getElementById('navbarContainer').innerHTML = await response.text();
+            } catch (error) {
+                console.error('Error fetching navbar:', error);
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', loadNavbar);
+    </script>
+
+    <h2>Register</h2>
+    <form id="registerForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br>
+
+        <label for="preferences">Preferences:</label>
+        <input type="text" id="preferences" name="preferences"><br>
+
+        <button type="submit">Register</button>
+    </form>
+    
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+
+    <script src="register.js"></script>
+</body>
+</html>

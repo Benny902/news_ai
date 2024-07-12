@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+    <div id="navbarContainer"></div>
+    <script>
+        async function loadNavbar() {
+            try {
+                const response = await fetch('navbar.html');
+                if (!response.ok) throw new Error('Failed to fetch navbar');
+                document.getElementById('navbarContainer').innerHTML = await response.text();
+            } catch (error) {
+                console.error('Error fetching navbar:', error);
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', loadNavbar);
+    </script>
+ 
+    <button class ="logout" onclick="logout()">Logout</button>
+
+    <div id="profileInfo"></div>
+    <br>    
+
+    <form id="editEmailForm">
+        <label for="editCategoryPreferences" styles="display: flex;align-items: center;">Enter / Update Email:</label>
+        <input type="text" id="editEmail" name="email" style="flex:1"><br>
+        <button type="submit" style="width:100%">Update Email</button>
+    </form>
+    <div id="editEmailMessage"></div>
+    
+
+    <form id="editCategoryPreferencesForm">
+        <button type="button" id="dropdownButton">▼ Select up to 5 categories</button> &nbsp; <button type="submit">Update Category Preferences</button>
+        <div class="dropdown    ">
+            <div class="dropdown-content" id="dropdownContent">
+                <label><input type="checkbox" value="Business"> Business</label>
+                <label><input type="checkbox" value="Crime"> Crime</label>
+                <label><input type="checkbox" value="Domestic"> Domestic</label>
+                <label><input type="checkbox" value="Education"> Education</label>
+                <label><input type="checkbox" value="Entertainment"> Entertainment</label>
+                <label><input type="checkbox" value="Environment"> Environment</label>
+                <label><input type="checkbox" value="Food"> Food</label>
+                <label><input type="checkbox" value="Health"> Health</label>
+                <label><input type="checkbox" value="Lifestyle"> Lifestyle</label>
+                <label><input type="checkbox" value="Other"> Other</label>
+                <label><input type="checkbox" value="Politics"> Politics</label>
+                <label><input type="checkbox" value="Science"> Science</label>
+                <label><input type="checkbox" value="Sports"> Sports</label>
+                <label><input type="checkbox" value="Technology"> Technology</label>
+                <label><input type="checkbox" value="Top"> Top</label>
+                <label><input type="checkbox" value="Tourism"> Tourism</label>
+                <label><input type="checkbox" value="World"> World</label>
+            </div>
+        </div>
+        
+    </form>
+    <div id="editCategoryPreferencesMessage"></div>
+
+
+    <form id="editPreferencesForm">
+        <label for="editPreferences">Enter a topic or a keyword: </label>
+        <input type="text" id="editPreferences" name="preferences" style="flex:1">
+        <h6>
+            Put either a single word or multiple words in the search bar and the data will be
+            searched for the exact search term. For example: <code>computer</code>, 
+            <code>mobile phones</code>, <code>"Leonardo di Caprio"</code>.
+            <h7><a class="advancedtips" id="openTipsModal">Advanced Search Tips</a></h7>
+        </h6>
+        <br>
+        <button type="submit" style="width:100%">Update Search Preferences</button>
+    </form>
+    <div id="editPreferencesMessage"></div>
+
+
+    <hr style="width:100%;margin: auto;"/>
+    <br>
+    <button id="fetchNews" class ="mybutton">Fetch News Headers</button>
+    <button id="fetchSummaries" class ="mybutton">Fetch Summarized News</button>
+    <div id="news-content"></div>
+<br>
+<hr style="width:50%;margin: auto;"/>
+<br>
+    <button id="sendEmail" class ="mybutton">Send Summary in Email</button>
+    <button id="sendTelegram" class ="mybutton">Send Summary in Telegram</button>
+    <div id="message-content"></div> 
+
+
+    <div id="tipsModal" class="modal">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeModal()">&times;</span>
+          <div class="modal-body">
+            <div class="tips-row">
+                <h2>Search for an exact match</h2>
+                <p>Put either a single word or multiple words in the search bar and the data will be searched for the exact search term. For example : <code>computer</code> , <code>mobile phones</code> , <code>"Leonardo di caprio"</code>. </p>
+            </div>
+    
+            <div class="tips-row">
+                <h2>Search multiple words together</h2>
+                <p>Put "<code>AND</code> " operator between two words to search them together and both the words will be present in each result although not necessarily together. For example,<code>laptop AND fire</code> , <code>apple watch AND sale</code>.</p>
+            </div>
+    
+            <div class="tips-row">
+                <h2>Combine searches</h2>
+                <p>Put "<code>OR</code> " between each search query and any of the words will be present in the result. For example <code>fruits OR vegetables</code> .</p>
+            </div>
+    
+            <div class="tips-row">
+                <h2>Exclude words from your search</h2>
+                <p>Put <code>NOT</code> in front of a word you want to leave out. For example, <code>apple NOT pears</code> .</p>
+            </div>
+    
+            <div class="tips-row">
+                <h2>Some examples:</h2>
+                <ul class="features-list-ul">
+                    <li>Search Social but not with pizza: <code>social NOT pizza</code> </li>
+                    <li>Search Social but not with pizza and wildfire: <code>social NOT (pizza AND wildfire)</code> </li>
+                    <li>Search multiple keywords with multiple AND operators: <code>social AND pizza AND pasta</code> </li>
+                    <li>Search multiple keywords with multiple OR operators: <code>social OR pizza OR pasta</code> </li>
+                    <li>Search for pizza or Social but not pasta: <code>(pizza OR social) NOT pasta</code> </li>
+                </ul>
+            </div>
+    
+            <div class="">
+                <h2>Other useful tips:</h2>
+                <ul class="features-list-ul">
+                    <li>Search terms are not case sensitive. For example searching <code>soccer</code> or <code>Soccer</code> will give the same result.</li>
+                    <li>Operators such as <code>NOT, AND</code> and <code>OR </code> or case sensitive and must be used in capital letters only.</li>
+                    <li>Leave the search bar empty and click on the search button to see the latest top news.</li>
+                    <li>Each time you search for a News, one API credit is consumed.</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    <script src="index.js"></script>
+    <script src="news.js"></script>
+    <script src="send.js"></script>
+
+</body>
+</html>

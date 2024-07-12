@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div id="navbarContainer"></div>
+    <script>
+        async function loadNavbar() {
+            try {
+                const response = await fetch('navbar.html');
+                if (!response.ok) throw new Error('Failed to fetch navbar');
+                document.getElementById('navbarContainer').innerHTML = await response.text();
+            } catch (error) {
+                console.error('Error fetching navbar:', error);
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', loadNavbar);
+    </script>
+    
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <button type="button" id="loginBtn">Login</button>
+    </form>
+
+    <p>Don't have a user? <a href="register.html">Sign up here</a>.</p>
+
+    <script src="login.js"></script>
+</body>
+</html>

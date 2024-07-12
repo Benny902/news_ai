@@ -32,9 +32,9 @@ the app includes a frontend for easier testing and using at  ``` http://localhos
 
 - using only backend API  
 #### example usage in postman / swagger / etc:
-i've also included "postman_collection.json" that you can use to test each route individually with the different order numbers as you wish.  
+(i've also included "postman_collection.json" for convenience)
 
-METHOD on http://localhost:5000/ with the following endpoints:  
+use METHOD on http://localhost:5000/ with the following endpoints:  
 >POST /register: to create a user  
 POST /login: to login with user  
 GET /profile: to show user profile  

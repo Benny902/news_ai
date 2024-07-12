@@ -31,7 +31,7 @@ pytest -v test.py
 the app includes a frontend for easier testing and using at  ``` http://localhost:4000/ ```  
 
 - using only backend API  
-#### example usage in postman / swagger / etc:
+#### example usage in postman / swagger / bash (curl) / etc:
 (i've also included "postman_collection.json" for convenience)
 
 use METHOD on http://localhost:5000/ with the following endpoints:  

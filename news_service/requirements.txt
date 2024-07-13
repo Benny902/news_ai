@@ -4,3 +4,4 @@ PyJWT
 werkzeug
 requests
 retrying
+load_dotenv

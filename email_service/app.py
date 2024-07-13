@@ -1,13 +1,16 @@
 from flask import Flask, request, jsonify
 from mailjet_rest import Client
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 
 # this is a temporary free tier Mailjet API key and secret - therefore i dont mind publish it here. (and also my 2ndary mail).
-api_key = 'adb10055ceda5647319bc649041afdd1'
-api_secret = '4d9a911f10bb2bdb11908aeba4784c8a'
-sender_email = 'Benny902e@gmail.com'
+api_key = os.getenv("MAILJET_API_KEY")
+api_secret = os.getenv("MAILJET_API_SECRET")
+sender_email = os.getenv("SENDER_EMAIL")
 
 mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 

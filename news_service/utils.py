@@ -1,18 +1,20 @@
 import requests
 from retrying import retry
-from config import Config
 from flask import request
 from auth import decode_token
 from bson.objectid import ObjectId
 from pymongo import MongoClient
-from config import Config
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # MongoDB connection setup
-client = MongoClient(Config.MONGO_URI)
-db = client[Config.DB_NAME]
+client = MongoClient(os.getenv("MONGO_URI"))
+db = client[os.getenv("DB_NAME")]
 
-NEWS_API_KEY = Config.NEWS_API_KEY
-GEMINI_API_KEY = Config.GEMINI_API_KEY
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 how_many_news_to_get = 5 # can be adjusted
 preferredLanguage ="english" # i can edit later the preferences of the user to include language preferences - for now can change manually

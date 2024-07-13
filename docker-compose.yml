@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:latest
+    restart: always
+    volumes:
+      - ./redis/data:/data
+    command: ["redis-server", "--save 60 1",  "--loglevel warning"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - news_ai_network
+
   accessor_service:
     build: ./accessor_service
     ports:
@@ -8,23 +22,95 @@ services:
     volumes:
       - ./logs:/app/logs
     depends_on:
-      - redis
-      - placement
+      - db
     networks:
-      - hello-dapr
+      - news_ai_network
+
+  accessor_service-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: [
+      "./daprd",
+      "--app-id", "accessor_service",
+      "--app-port", "5000",
+      "--dapr-http-port", "3500",
+      "--dapr-grpc-port", "50001",
+      "--components-path", "/components"
+    ]
+    volumes:
+      - "./components:/components"
+    depends_on:
+      - accessor_service
+    network_mode: "service:accessor_service"
 
   news_service:
     build: ./news_service
     ports:
       - "5001:5001"
     env_file:
-      - ./env/news_service.env
+      - ./news_service/.env
     depends_on:
       - db
-      - redis
-      - placement
     networks:
-      - hello-dapr
+      - news_ai_network
+
+  news_service-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: [
+      "./daprd",
+      "--app-id", "news_service",
+      "--app-port", "5001",
+      "--dapr-http-port", "3501",
+      "--dapr-grpc-port", "50002",
+      "--components-path", "/components"
+    ]
+    volumes:
+      - "./components:/components"
+    depends_on:
+      - news_service
+    network_mode: "service:news_service"
+
+  email_service:
+    build: ./email_service
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./email_service/.env
+    networks:
+      - news_ai_network
+
+  email_service-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: [
+      "./daprd",
+      "--app-id", "email_service",
+      "--app-port", "5002",
+      "--dapr-http-port", "3502",
+      "--dapr-grpc-port", "50003",
+      "--components-path", "/components"
+    ]
+    volumes:
+      - "./components:/components"
+    depends_on:
+      - email_service
+    network_mode: "service:email_service"
 
   db:
     image: mongo
@@ -32,23 +118,10 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-      - ./components/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./news_service/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
-      - hello-dapr
-
-  email_service:
-    build: ./email_service
-    ports:
-      - "5002:5002"
-    env_file:
-      - ./env/email_service.env
-    depends_on:
-      - redis
-      - placement
-
-    networks:
-      - hello-dapr
-
+      - news_ai_network
+      
   frontend:
     build:
       context: ./frontend
@@ -56,66 +129,9 @@ services:
     ports:
       - "4000:80"
 
-
-###################### from here trying to implemenet Dapr from their docs ############################
-  ############################
-  # Dapr placement service
-  ############################
-  placement:
-    image: "daprio/dapr"
-    command: ["./placement", "-port", "50006"]
-    ports:
-      - "50006:50006"
-    networks:
-      - hello-dapr
-  ############################
-  # Redis state store
-  ############################
-  redis:
-    image: "redis:alpine"
-    ports:
-      - "6380:6379"
-    networks:
-      - hello-dapr
-
-  news_service-dapr:
-    image: "daprio/daprd:edge"
-    command: ["./daprd",
-    "-app-id", "news_service",
-    "-placement-host-address", "placement:50006",
-    "-components-path", "/components"]
-    volumes:
-      - "./components/:/components"
-    depends_on:
-      - news_service
-    network_mode: "service:news_service"
-
-  accessor_service-dapr:
-    image: "daprio/daprd:edge"
-    command: ["./daprd",
-    "-app-id", "accessor_service",
-    "-placement-host-address", "placement:50006",
-    "-components-path", "/components"]
-    volumes:
-      - "./components/:/components"
-    depends_on:
-      - accessor_service
-    network_mode: "service:accessor_service"
-
-  email_service-dapr:
-    image: "daprio/daprd:edge"
-    command: ["./daprd",
-    "-app-id", "email_service",
-    "-placement-host-address", "placement:50006",
-    "-components-path", "/components"]
-    volumes:
-      - "./components/:/components"
-    depends_on:
-      - email_service
-    network_mode: "service:email_service"
-
-networks:
-    hello-dapr:
-
 volumes:
   mongo-data:
+
+networks:
+  news_ai_network:
+    driver: bridge

@@ -21,16 +21,17 @@ now the app with all its microservices should be running.
 
 ## How to test
 
-- using integration test
+- ## using integration test
 to run the integration test: (cd integration_test)  
 ```
 pytest -v test.py 
 ```
 
-- using frontend
-the app includes a frontend for easier testing and using at  ``` http://localhost:4000/ ```  
+- ## using frontend
+the app includes a frontend for easier testing and using at  ``` http://localhost:4000/ ``` (Click image to enlarge)
+<img src="./images/frontend.png" alt="Click image to enlarge" width="300"  height="600">
 
-- using only backend API  
+- ## using only backend API  
 #### example usage in postman / swagger / bash (curl) / etc:
 (i've also included "postman_collection.json" for convenience)
 

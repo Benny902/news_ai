@@ -3210,3 +3210,9 @@
 2024-07-13 18:49:02,828 INFO __main__ Thread-20 (process_request_thread) : Response status code: 201
 2024-07-13 18:49:02,828 INFO __main__ Thread-20 (process_request_thread) : Received response data: {'message': 'User created successfully', 'user_id': '6692cc1e5c94be31a676e608'}
 2024-07-13 18:49:02,829 INFO werkzeug Thread-20 (process_request_thread) : 172.27.0.1 - - [13/Jul/2024 18:49:02] "[35m[1mPOST /register HTTP/1.1[0m" 201 -
+2024-07-15 02:33:31,667 INFO werkzeug MainThread : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.30.0.6:5000
+2024-07-15 02:33:31,668 INFO werkzeug MainThread : [33mPress CTRL+C to quit[0m
+2024-07-15 02:33:31,670 INFO werkzeug MainThread :  * Restarting with stat

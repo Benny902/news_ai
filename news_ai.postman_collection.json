@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "de1c9013-63c4-42e2-a83d-004a973f46a3",
+		"_postman_id": "59e37f44-58bc-4bd9-b69d-4b6ab77ace11",
 		"name": "news_ai",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "23825542"
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"1234\", \r\n    \"password\": \"1234\",\r\n    \"email\": \"benny902@gmail.com\",\r\n    \"preferences\": \"Blockchain, Cybersecurity\",\r\n    \"category_preferences\": \"Technology\"\r\n}",
+					"raw": "{\r\n    \"username\": \"1234\", \r\n    \"password\": \"1234\",\r\n    \"email\": \"benny902@gmail.com\",\r\n    \"preferences\": \"Blockchain OR Cybersecurity\",\r\n    \"category_preferences\": \"Technology\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +70,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"preferences\": \"AI, Blockchain, ML\"\r\n}",
+					"raw": "{\r\n    \"preferences\": \"Blockchain OR Machine learning\",\r\n    \"category_preferences\": \"Technology\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

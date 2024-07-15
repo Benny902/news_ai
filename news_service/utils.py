@@ -48,8 +48,13 @@ def get_user_data():
 def fetch_news(user):
     preferences = user.get('preferences', '')
     category_preferences = user.get('category_preferences', '')
+    if preferences:
+    # join with "%20OR%20" for the newsdata search mechanism
+        categories = [category.strip() for category in preferences.split(',')]
+        preferences_formatted = "%20OR%20".join(categories)
+
     try: # https://newsdata.io/api/1/news?apikey=pub_481851327244a72b345ba689fc6897ca6d2a9&q=Blockchain%20Cyber%20security&category=education,technology 
-        response = requests.get(f'https://newsdata.io/api/1/news?&apiKey={NEWS_API_KEY}&q={preferences}&category={category_preferences}')
+        response = requests.get(f'https://newsdata.io/api/1/news?&apiKey={NEWS_API_KEY}&q={preferences_formatted}&category={category_preferences}&language=en')
         response.raise_for_status()
         news_data = response.json()
         articles = news_data.get("results", [])

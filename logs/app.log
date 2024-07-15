@@ -3343,3 +3343,9 @@
 2024-07-15 04:35:50,284 INFO __main__ Thread-11 (process_request_thread) : Response status code: 200
 2024-07-15 04:35:50,285 INFO __main__ Thread-11 (process_request_thread) : Received response data: {'category_preferences': 'Technology', 'email': 'benny902@gmail.com', 'preferences': 'AI OR Cybersecurity OR Blockchain', 'username': '1234'}
 2024-07-15 04:35:50,285 INFO werkzeug Thread-11 (process_request_thread) : 172.30.0.1 - - [15/Jul/2024 04:35:50] "GET /profile HTTP/1.1" 200 -
+2024-07-15 05:06:27,085 INFO werkzeug Thread-12 (process_request_thread) : 172.30.0.1 - - [15/Jul/2024 05:06:27] "OPTIONS /profile HTTP/1.1" 200 -
+2024-07-15 05:06:27,091 INFO __main__ Thread-13 (process_request_thread) : Profile endpoint called with method GET
+2024-07-15 05:06:27,091 INFO __main__ Thread-13 (process_request_thread) : Forwarding request to http://localhost:3500/v1.0/invoke/news_service/method/profile with method GET and data None
+2024-07-15 05:06:27,103 INFO __main__ Thread-13 (process_request_thread) : Response status code: 200
+2024-07-15 05:06:27,103 INFO __main__ Thread-13 (process_request_thread) : Received response data: {'category_preferences': 'Technology', 'email': 'benny902@gmail.com', 'preferences': 'AI OR Cybersecurity OR Blockchain', 'username': '1234'}
+2024-07-15 05:06:27,103 INFO werkzeug Thread-13 (process_request_thread) : 172.30.0.1 - - [15/Jul/2024 05:06:27] "GET /profile HTTP/1.1" 200 -

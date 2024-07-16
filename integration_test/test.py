@@ -9,7 +9,7 @@ def user():
         "username": "1234", 
         "password": "1234",
         "email": "benny902@gmail.com",
-        "preferences": "Blockchain, Cybersecurity",
+        "preferences": "Blockchain OR Cybersecurity",
         "category_preferences": "Technology"
     }
 
@@ -57,7 +57,7 @@ def test_profile_get(token):
 def test_profile_put(token):
     headers = {"Authorization": token}
     new_preferences = {
-        "preferences": "Blockchain, Cybersecurity, AI"
+        "preferences": "Blockchain OR Cybersecurity OR AI"
     }
     print(f"Headers for profile PUT: {headers}")
     response = requests.put(f"{BASE_URL}/profile", headers=headers, json=new_preferences)

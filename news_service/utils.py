@@ -62,13 +62,17 @@ def fetch_news(user):
     except requests.exceptions.RequestException as e:
         raise requests.exceptions.RequestException(f"Error fetching news articles: {e}")
     
+
 # if fetch_news gives more than 5 articles (can be adjust on 'how_many_news_to_get') then get only top 5 bases on user preferences using gemini
-def select_top_articles(articles, preferences):
-    try: 
+def select_top_articles(articles, preferences, how_many_news_to_get=5):
+    try:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GEMINI_API_KEY}"
         headers = {'Content-Type': 'application/json'}
-        article_texts = "\n\n".join([article['description'] for article in articles])
-        data = { # need to build this data for the text because this is how the gemini api wants to get the data in the POST request
+        
+        # fixed "expected str instance, NoneType found" by filtering out None descriptions
+        article_texts = "\n\n".join([article['description'] for article in articles if article.get('description')])
+        
+        data = {
             "contents": [
                 {
                     "parts": [
@@ -79,27 +83,38 @@ def select_top_articles(articles, preferences):
                 }
             ]
         }
+        
         response = requests.post(url, headers=headers, json=data)
 
         if response.status_code == 200:
             result = response.json()
             selected_article_descriptions = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text")
             selected_articles = []
+            
             for description in selected_article_descriptions.split('\n'):
                 for article in articles:
-                    if description in article['description']:
+                    article_description = article.get('description')
+                    if article_description and description in article_description:
                         selected_articles.append(article)
                         if len(selected_articles) == how_many_news_to_get:
                             break
                 if len(selected_articles) == how_many_news_to_get:
                     break
+            
             return selected_articles
+        
         else:
             raise requests.exceptions.RequestException(
                 f"Error selecting top articles: {response.status_code} - {response.text}"
             )
+    
+    except requests.exceptions.RequestException as e:
+        raise requests.exceptions.RequestException(f"Error selecting top articles: {e}")
+
     except Exception as e:
         raise requests.exceptions.RequestException(f"Error selecting top articles: {e}")
+
+
     
 
 # summarize with gemini AI - function for both /news and /summary to eliminate duplicate code

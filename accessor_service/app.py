@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # URLs of the current additional services
 SERVICE_URLS = {
     'B': 'news_service',
-    'C': 'email_service' # i dont need this here, because i call service C from service B, but its here just for references
+    'C': 'email_service'
 }
 
 # function to forward requests to a service (updated to do it via Dapr url)
@@ -104,6 +104,13 @@ def process_and_send_email(headers):
 def process_email(headers):
     data, status_code = forward_to_service('B', '/email', method='GET', headers=headers)
     return data
+
+@app.route('/queue', methods=['GET'])
+def queue():
+    logger.info("Queue endpoint called")
+    data, status_code = forward_to_service('C', '/queue', method='GET')
+    return jsonify(data), status_code
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

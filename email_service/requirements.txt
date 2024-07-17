@@ -1,3 +1,6 @@
 Flask
 mailjet_rest
 load_dotenv
+pika
+APScheduler
+requests

@@ -82,5 +82,9 @@ def test_email(token):
     assert response.status_code == 200
     assert response.json().get("message") == "processing summary, email with the summarized news will be sent soon"
 
+def test_queue():
+    response = requests.get(f"{BASE_URL}/queue")
+    assert response.status_code == 200
+
 if __name__ == "__main__":
     pytest.main()

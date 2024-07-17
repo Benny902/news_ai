@@ -87,6 +87,8 @@ services:
       - "5002:5002"
     env_file:
       - ./email_service/.env
+    depends_on:
+      - rabbitmq
     networks:
       - news_ai_network
 
@@ -111,6 +113,14 @@ services:
     depends_on:
       - email_service
     network_mode: "service:email_service"
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - news_ai_network
 
   db:
     image: mongo

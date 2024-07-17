@@ -4,11 +4,7 @@
 
 ### Overview and Idea
 
-The project aims to develop a microservice-based application that aggregates news
-and technology updates based on user preferences. The system will fetch the latest
-news, pick up most interesting news using AI based on user preferences (optionally
-generate concise summaries using AI), and send this information to users via email,
-Telegram, or other communication channels.
+Dockerized microservice-based application, written mostly with Python Flask, that fetches most interesting news (by newsdata.io API) using user preferences and generates concise summaries using AI (Gemini API) and sends it to users via email, also utilizing Dapr and RabbitMQ.  
 
 
 ## How to run
@@ -43,6 +39,7 @@ PUT /profile: to edit preferences of the user
 GET /news: to show news based on user preferences  
 GET /summary: to show summarized news based on user preferences  
 GET /email: to email summarized news based on user preferences to users email  
+GET /queue: to get an email from queue and process it.  
 
 for "POST /register" or "POST /login" you need to include json input.  
 for example POST /login  

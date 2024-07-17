@@ -40,8 +40,9 @@ GET /news: to show news based on user preferences
 GET /summary: to show summarized news based on user preferences  
 GET /email: to email summarized news based on user preferences to users email  
 GET /queue: to get an email from queue and process it.  
+- (if /queue is not called, the emails will be processed from the queue automatically after 60 seconds.)
 
-for "POST /register" or "POST /login" you need to include json input.  
+- for "POST /register" or "POST /login" you need to include json input.  
 for example POST /login  
 ```
 {  
